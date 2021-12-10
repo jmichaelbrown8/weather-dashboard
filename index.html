@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <script src="https://kit.fontawesome.com/60540321c0.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.4/dist/css/foundation.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+    <header class="card text-center">
+        <h1>Weather Dashboard</h1>
+    </header>
+    <div class="grid-x grid-padding-x">
+        <nav class="card cell medium-3">
+            <form class="card-header">
+                <label>
+                    City
+                    <input type="text" placeholder="Portland, OR" />
+                </label>
+                <!-- <button type="button" class="button">Search</button> -->
+            </form>
+            <section id="saved-cities" class="hide-for-small-only">
+                <button type="button" class="button expanded secondary">Austin</button>
+                <button type="button" class="button expanded secondary">Chicago</button>
+                <button type="button" class="button expanded secondary">New York</button>
+            </section>
+        </nav>
+        <main class="card cell medium-9 grid-y grid-padding-y grid-padding-x">
+            <section id="today" class="cell">
+                <h3>
+                    <span id="city">Atlanta</span>
+                    <span id="date-0">(3/30/2021)</span>
+                    <i id="weather-0" class="fas fa-cloud"></i>
+                </h3>
+                <div>
+                    Temp: <span id="temp-0">75˚(opt+K)</span>
+                </div>
+                <div>
+                    Wind: <span id="wind-0">6.67 MPH</span>
+                </div>
+                <div>
+                    Humidity: <span id="hum-0">46 %</span>
+                </div>
+                <div>
+                    UV Index: <span id="uv-0">74</span>
+                </div>
+    
+            </section>
+            
+            <h6 class="cell">Five Day Forecast</h6>
+            <section id="forecast" class="cell grid-x grid-padding-x grid-padding-y ">
+                <div class="cell card small-12 medium-auto">
+                    <div>3/31/2021</div>
+                    <div><i class="fas fa-cloud"></i></div>
+                    <div>Temp</div>
+                    <div>Wind</div>
+                    <div>Humidity</div>
+                </div>
+                <div class="cell card small-12 medium-auto">
+                    <div>4/1/2021</div>
+                    <div><i class="fas fa-cloud"></i></div>
+                    <div>Temp</div>
+                    <div>Wind</div>
+                    <div>Humidity</div>
+                </div>
+                <div class="cell card small-12 medium-auto">
+                    <div>4/2/2021</div>
+                    <div><i class="fas fa-cloud"></i></div>
+                    <div>Temp</div>
+                    <div>Wind</div>
+                    <div>Humidity</div>
+                </div>
+                <div class="cell card small-12 medium-auto">
+                    <div>4/3/2021</div>
+                    <div><i class="fas fa-cloud"></i></div>
+                    <div>Temp</div>
+                    <div>Wind</div>
+                    <div>Humidity</div>
+                </div>
+                <div class="cell card small-12 medium-auto">
+                    <div>4/4/2021</div>
+                    <div><i class="fas fa-cloud"></i></div>
+                    <div>Temp</div>
+                    <div>Wind</div>
+                    <div>Humidity</div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.4/dist/js/foundation.min.js" crossorigin="anonymous"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>
