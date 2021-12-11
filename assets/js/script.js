@@ -90,13 +90,38 @@ function weatherByLocation(lat, lon) {
             throw data.message;
         }
 
-
+        // Update the page with the response data
+        displayWeather(data);
     })
     .catch(function(error) {
         // Handle error response
         console.error('Error:', error);
         window.alert(error);
     })
+}
+
+/** Converts dt to a moment */
+function dtToMoment(dt) {
+    return moment(parseInt(dt + "000")); // need to add milliseconds to dt propert
+}
+
+/** Displays the weather on the page */
+function displayWeather(data) {
+    //******* */ Set Current
+    // Set City
+    let city = data.
+    // Set Date
+
+    // Temp
+
+    // Wind
+
+    // Humidity
+
+    // UV Index
+
+    //******/ Set 5-day forecast
+    
 }
 
 /** Input Handler */
