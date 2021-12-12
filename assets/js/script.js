@@ -1,57 +1,12 @@
 const APIKEY = '96342a0cd031f214e5d9cb089eb89977';
 
-// api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
+var city = "Portland"; // currently selected city
+var date = new moment(); // current date
+var cities = []; // list of city buttons from localStorage
 
-// http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
-
-// https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=minutely,hourly,alerts&appid={API key}
-                          
-// {
-//     "coord": {
-//       "lon": -122.08,
-//       "lat": 37.39
-//     },
-//     "weather": [
-//       {
-//         "id": 800,
-//         "main": "Clear",
-//         "description": "clear sky",
-//         "icon": "01d"
-//       }
-//     ],
-//     "base": "stations",
-//     "main": {
-//       "temp": 282.55,
-//       "feels_like": 281.86,
-//       "temp_min": 280.37,
-//       "temp_max": 284.26,
-//       "pressure": 1023,
-//       "humidity": 100
-//     },
-//     "visibility": 16093,
-//     "wind": {
-//       "speed": 1.5,
-//       "deg": 350
-//     },
-//     "clouds": {
-//       "all": 1
-//     },
-//     "dt": 1560350645,
-//     "sys": {
-//       "type": 1,
-//       "id": 5122,
-//       "message": 0.0139,
-//       "country": "US",
-//       "sunrise": 1560343627,
-//       "sunset": 1560396563
-//     },
-//     "timezone": -25200,
-//     "id": 420006353,
-//     "name": "Mountain View",
-//     "cod": 200
-//     }                         
-
-// icon: https://openweathermap.org/img/wn/{10d}@2x.png
+var currentEl = $('#today');
+var citiesContainerEl = $('#saved-cities');
+var forecastContainerEl = $('#forecast');
 
 /** Search Function to get a latitude and longitude from a city string */
 function searchForLocation(input) {
@@ -67,7 +22,13 @@ function searchForLocation(input) {
         }
 
         // TODO: allow user to select from results
-        
+
+        city = data[0].name;
+
+        if ( !cities.includes(city) ) {
+            cities.unshift(city);
+        }
+
         return weatherByLocation(data[0].lat, data[0].lon);
     })
     .catch(function(error) {
@@ -105,23 +66,65 @@ function dtToMoment(dt) {
     return moment(parseInt(dt + "000")); // need to add milliseconds to dt propert
 }
 
+/** Displays the city */
+function displayCity(cityString) {
+
+}
+
+/** Displays the city buttons */
+function displayCityButtons(citiesArray) {
+
+}
+
 /** Displays the weather on the page */
 function displayWeather(data) {
-    //******* */ Set Current
-    // Set City
-    let city = data.
-    // Set Date
+    // clear elements
 
-    // Temp
+    currentEl.empty();
+    forecastContainerEl.empty();
 
-    // Wind
+    // Set Current
+    currentEl.append(buildMainWeatherCard(data.current));
 
-    // Humidity
-
-    // UV Index
-
-    //******/ Set 5-day forecast
+    // Set 5-day forecast
+    for (var i = 0; i < 5; i++) {
+        let card = buildForecastWeatherCard(data.daily[i]);
+        forecastContainerEl.append(card);
+    }
     
+}
+
+/** Build main weather card */
+function buildMainWeatherCard(data) {
+    console.log('building main weather card');
+    let date = dtToMoment(data.dt);
+    return $(`
+    <h3>
+        <span>${city}</span>
+        <span>(${date})</span>
+        <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" alt="${data.weather[0].description}"></img>
+    </h3>
+    <div>Temp: ${data.temp}˚</div>
+    <div>Wind: ${data.wind_speed} MPH</div>
+    <div>Humidity: ${data.humidity}%</div>
+    <div>UV Index: ${data.uvi}</div>
+    `);
+}
+
+
+/** Builds each separate forecast weather card */
+function buildForecastWeatherCard(data) {
+    console.log('building forecast');
+    let date = dtToMoment(data.dt);
+    return $(`
+    <div class="cell card small-12 medium-auto">
+        <div>${date}</div>
+        <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" alt="${data.weather[0].description}"></img>
+        <div>Temp: ${data.temp}˚</div>
+        <div>Wind: ${data.wind_speed} MPH</div>
+        <div>Humidity: ${data.humidity}%</div>
+    </div>
+    `);
 }
 
 /** Input Handler */
