@@ -2,7 +2,7 @@ const APIKEY = '96342a0cd031f214e5d9cb089eb89977';
 
 var city = "Portland"; // currently selected city from localStorage
 var date = new moment(); // current date
-var cities = ['Austin', 'Chicago', 'New York']; // list of city buttons from localStorage
+var cities = []; // list of city buttons from localStorage
 
 var currentEl = $('#today');
 var citiesContainerEl = $('#saved-cities');
@@ -19,7 +19,7 @@ function init() {
 }
 
 /** Search Function to get a latitude and longitude from a city string */
-function searchForLocation(input) {
+function searchForLocation(input, isInit) {
     fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${input}&limit=5&appid=${APIKEY}`)
     .then(function(response) {
         return response.json();
@@ -32,13 +32,26 @@ function searchForLocation(input) {
         }
 
         // TODO: allow user to select from results
+        
+        // short circuit setting localStorage if it's page initialization
+        if (isInit) {
+            return weatherByLocation(data[0].lat, data[0].lon);
+        }
 
-        city = data[0].name;
+        // otherwise set the city as the last searched, and into the cities array
+        city = [
+            data[0].name,
+            data[0].state,
+            data[0].country
+        ].join(', ');
+        
         localStorage.setItem('city', city);
 
         if ( !cities.includes(city) ) {
             cities.unshift(city);
         }
+        localStorage.setItem('cities', JSON.stringify(cities));
+        displayCityButtons(cities);
 
         return weatherByLocation(data[0].lat, data[0].lon);
     })
@@ -79,6 +92,8 @@ function dtToMoment(dt) {
 
 /** Displays the city buttons */
 function displayCityButtons(citiesArray) {
+    console.log('displaying city buttons');
+    console.log(citiesArray);
     // TODO: Allow user to remove a city button
     // TODO: Limit number of cities in the array list
     citiesContainerEl.empty();
@@ -161,4 +176,4 @@ $('form').submit(searchHandler);
 /** On page load, get city saved from localStorage, city buttons saved from localStorage, call API and display the currently selected city. */
 init()
 displayCityButtons(cities);
-searchForLocation(city);
+searchForLocation(city, true);
