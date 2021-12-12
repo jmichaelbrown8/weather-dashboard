@@ -1,12 +1,22 @@
 const APIKEY = '96342a0cd031f214e5d9cb089eb89977';
 
-var city = "Portland"; // currently selected city
+var city = "Portland"; // currently selected city from localStorage
 var date = new moment(); // current date
-var cities = []; // list of city buttons from localStorage
+var cities = ['Austin', 'Chicago', 'New York']; // list of city buttons from localStorage
 
 var currentEl = $('#today');
 var citiesContainerEl = $('#saved-cities');
 var forecastContainerEl = $('#forecast');
+
+/** Initialize the variables from localStorage (or browser location) */
+function init() {
+    city = localStorage.getItem('city') || 'Portland';
+
+    // Geolocation example: navigator.geolocation.getCurrentPosition(result => console.log(result))
+    // reverse geocoding: http://api.openweathermap.org/geo/1.0/reverse?lat=51.5098&lon=-0.1180&limit=5&appid={API key}
+    
+    cities = JSON.parse(localStorage.getItem('cities')) || [];
+}
 
 /** Search Function to get a latitude and longitude from a city string */
 function searchForLocation(input) {
@@ -24,6 +34,7 @@ function searchForLocation(input) {
         // TODO: allow user to select from results
 
         city = data[0].name;
+        localStorage.setItem('city', city);
 
         if ( !cities.includes(city) ) {
             cities.unshift(city);
@@ -66,14 +77,14 @@ function dtToMoment(dt) {
     return moment(parseInt(dt + "000")); // need to add milliseconds to dt propert
 }
 
-/** Displays the city */
-function displayCity(cityString) {
-
-}
-
 /** Displays the city buttons */
 function displayCityButtons(citiesArray) {
-
+    // TODO: Allow user to remove a city button
+    // TODO: Limit number of cities in the array list
+    citiesContainerEl.empty();
+    for (var i = 0; i < citiesArray.length; i++) {
+        citiesContainerEl.append($(`<button type="button" class="button expanded secondary">${citiesArray[i]}</button>`));
+    }
 }
 
 /** Displays the weather on the page */
@@ -87,7 +98,7 @@ function displayWeather(data) {
     currentEl.append(buildMainWeatherCard(data.current));
 
     // Set 5-day forecast
-    for (var i = 0; i < 5; i++) {
+    for (var i = 1; i < 6; i++) {
         let card = buildForecastWeatherCard(data.daily[i]);
         forecastContainerEl.append(card);
     }
@@ -114,7 +125,6 @@ function buildMainWeatherCard(data) {
     <div>UV Index: ${data.uvi}</div>
     `);
 }
-
 
 /** Builds each separate forecast weather card */
 function buildForecastWeatherCard(data) {
@@ -147,3 +157,8 @@ function searchHandler(event) {
 
 /** Add submit handler to search box */
 $('form').submit(searchHandler);
+
+/** On page load, get city saved from localStorage, city buttons saved from localStorage, call API and display the currently selected city. */
+init()
+displayCityButtons(cities);
+searchForLocation(city);
