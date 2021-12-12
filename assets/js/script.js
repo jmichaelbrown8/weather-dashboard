@@ -14,14 +14,14 @@ function init() {
     city = localStorage.getItem('city') || 'Portland';
 
     // Geolocation example: navigator.geolocation.getCurrentPosition(result => console.log(result))
-    // reverse geocoding: http://api.openweathermap.org/geo/1.0/reverse?lat=51.5098&lon=-0.1180&limit=5&appid={API key}
+    // reverse geocoding: https://api.openweathermap.org/geo/1.0/reverse?lat=51.5098&lon=-0.1180&limit=5&appid={API key}
     
     cities = JSON.parse(localStorage.getItem('cities')) || [];
 }
 
 /** Search Function to get a latitude and longitude from a city string */
 function searchForLocation(input, isInit) {
-    fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${input}&limit=5&appid=${APIKEY}`)
+    fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${input}&limit=5&appid=${APIKEY}`)
     .then(function(response) {
         return response.json();
     })
