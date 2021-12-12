@@ -26,7 +26,6 @@ function searchForLocation(input, isInit) {
         return response.json();
     })
     .then(function(data) {
-        console.log("geocoding", JSON.stringify(data));
         // Handle error response
         if (data.cod >= 400) {
             throw data.message;
@@ -70,7 +69,6 @@ function weatherByLocation(lat, lon) {
         return response.json();
     })
     .then(function(data) {
-        console.log(data);
         // Handle error response
         if (data.cod >= 400) {
             throw data.message;
@@ -93,8 +91,6 @@ function dtToMoment(dt) {
 
 /** Displays the city buttons */
 function displayCityButtons(citiesArray) {
-    console.log('displaying city buttons');
-    console.log(citiesArray);
     // TODO: Allow user to remove a city button
     // TODO: Limit number of cities in the array list
     citiesContainerEl.empty();
@@ -123,7 +119,6 @@ function displayWeather(data) {
 
 /** Build main weather card */
 function buildMainWeatherCard(data) {
-    console.log('building main weather card');
     let date = dtToMoment(data.dt);
     let iconUrl = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
     let description = data.weather[0].description;
@@ -144,7 +139,6 @@ function buildMainWeatherCard(data) {
 
 /** Builds each separate forecast weather card */
 function buildForecastWeatherCard(data) {
-    console.log('building forecast');
     let date = dtToMoment(data.dt);
     let iconUrl = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
     let description = data.weather[0].description;
@@ -193,7 +187,6 @@ function buildUVIndexEl(value) {
 /** Input Handler */
 function searchHandler(event) {
     event.preventDefault();
-    console.log("submitted");
     var searchValue = $('#search-input').val();
     searchForLocation(searchValue);
 }
