@@ -7,6 +7,7 @@ var cities = []; // list of city buttons from localStorage
 var currentEl = $('#today');
 var citiesContainerEl = $('#saved-cities');
 var forecastContainerEl = $('#forecast');
+var formEl = $('form');
 
 /** Initialize the variables from localStorage (or browser location) */
 function init() {
@@ -44,7 +45,7 @@ function searchForLocation(input, isInit) {
             data[0].state,
             data[0].country
         ].join(', ');
-        
+
         localStorage.setItem('city', city);
 
         if ( !cities.includes(city) ) {
@@ -170,8 +171,17 @@ function searchHandler(event) {
     searchForLocation(searchValue);
 }
 
+/** City Button Click Handler */
+function cityClickHandler(event) {
+    let searchTerm = $(event.target).text();
+    searchForLocation(searchTerm);
+}
+
 /** Add submit handler to search box */
-$('form').submit(searchHandler);
+formEl.submit(searchHandler);
+
+/** Add click handler for city buttons */
+citiesContainerEl.click(cityClickHandler);
 
 /** On page load, get city saved from localStorage, city buttons saved from localStorage, call API and display the currently selected city. */
 init()
