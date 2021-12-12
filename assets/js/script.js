@@ -138,7 +138,7 @@ function buildMainWeatherCard(data) {
     <div>Temp: ${temp}˚</div>
     <div>Wind: ${wind} MPH</div>
     <div>Humidity: ${data.humidity}%</div>
-    <div>UV Index: ${data.uvi}</div>
+    <div>UV Index: ${buildUVIndexEl(data.uvi)}</div>
     `);
 }
 
@@ -161,6 +161,33 @@ function buildForecastWeatherCard(data) {
         <div>Humidity: ${data.humidity}%</div>
     </div>
     `);
+}
+
+/** Build UV Index element based on value */
+function buildUVIndexEl(value) {
+    let level = 'none';
+    if (value <= 2) {
+        // 0-2 is low
+        level = 'low';
+    }
+    else if (value <= 5) {
+        // 3-5 is moderate
+        level = 'moderate';
+    }
+    else if (value <= 7) {
+        // 6-7 is high
+        level = 'high';
+    }
+    else if (value <= 10) {
+        // 8-10 is very high
+        level = 'very-high';
+    }
+    else {
+        // 11+ is extreme
+        level = 'extreme';
+    }
+
+    return `<span class="uv-index ${level}">${value}</span>`;
 }
 
 /** Input Handler */

@@ -1,0 +1,24 @@
+.uv-index {
+    padding: .05rem .15rem;
+    border: 1px solid;
+    border-radius: .2rem;
+    background-color: gray;
+    color: white;
+}
+
+.uv-index.low {
+    background-color: green;
+}
+.uv-index.moderate {
+    background-color: yellow;
+    color: black;
+}
+.uv-index.high {
+    background-color: orange;
+}
+.uv-index.very-high {
+    background-color: red;
+}
+.uv-index.extreme {
+    background-color: purple;
+}
