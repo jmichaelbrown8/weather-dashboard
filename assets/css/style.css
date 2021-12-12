@@ -1,9 +1,19 @@
+:root {
+    --dark: #1779ba;
+    --light: #fefefe;
+}
+
+header.card {
+    background-color: var(--dark);
+    color: var(--light);
+    border: none;
+}
+
 .uv-index {
     padding: .05rem .15rem;
-    border: 1px solid;
     border-radius: .2rem;
     background-color: gray;
-    color: white;
+    color: var(--light);
 }
 
 .uv-index.low {
@@ -21,4 +31,9 @@
 }
 .uv-index.extreme {
     background-color: purple;
+}
+
+#forecast > .card {
+    background-color: var(--dark);
+    color: var(--light);
 }
