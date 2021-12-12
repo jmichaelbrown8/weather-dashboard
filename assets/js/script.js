@@ -98,14 +98,18 @@ function displayWeather(data) {
 function buildMainWeatherCard(data) {
     console.log('building main weather card');
     let date = dtToMoment(data.dt);
+    let iconUrl = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+    let description = data.weather[0].description;
+    let temp = Math.round(data.temp);
+    let wind = Math.round(data.wind_speed);
     return $(`
     <h3>
         <span>${city}</span>
-        <span>(${date})</span>
-        <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" alt="${data.weather[0].description}"></img>
+        <span>(${date.format('L')})</span>
+        <img src="${iconUrl}" alt="${description}"></img>
     </h3>
-    <div>Temp: ${data.temp}˚</div>
-    <div>Wind: ${data.wind_speed} MPH</div>
+    <div>Temp: ${temp}˚</div>
+    <div>Wind: ${wind} MPH</div>
     <div>Humidity: ${data.humidity}%</div>
     <div>UV Index: ${data.uvi}</div>
     `);
@@ -116,12 +120,18 @@ function buildMainWeatherCard(data) {
 function buildForecastWeatherCard(data) {
     console.log('building forecast');
     let date = dtToMoment(data.dt);
+    let iconUrl = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+    let description = data.weather[0].description;
+    let temp = Math.round(data.temp.day);
+    let wind = Math.round(data.wind_speed);
     return $(`
     <div class="cell card small-12 medium-auto">
-        <div>${date}</div>
-        <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" alt="${data.weather[0].description}"></img>
-        <div>Temp: ${data.temp}˚</div>
-        <div>Wind: ${data.wind_speed} MPH</div>
+        <div>${date.format("L")}</div>
+        <div>
+            <img src="${iconUrl}" alt="${description}"></img>
+        </div>    
+        <div>Temp: ${temp}˚</div>
+        <div>Wind: ${wind} MPH</div>
         <div>Humidity: ${data.humidity}%</div>
     </div>
     `);
